@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Approval Workflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">DA</div>
+      <div>
+        <h2>Document Approval</h2>
+        <span>Workflow Management</span>
+      </div>
+    </div>
+
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      Cloud Database Connected
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">Workflow Management</div>
+        <h1>Document Approval Workflow</h1>
+        <p>
+          Submit, review and manage business documents through a centralized
+          cloud-based approval workflow.
+        </p>
+      </div>
+
+      <button class="primary-btn" onclick="openAddModal()">
+        + New Document
+      </button>
+    </section>
+
+    <section class="stats">
+
+      <div class="stat-card">
+        <div class="stat-label">Total Documents</div>
+        <div class="stat-value" id="totalCount">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Pending</div>
+        <div class="stat-value" id="pendingCount">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Under Review</div>
+        <div class="stat-value" id="reviewCount">0</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Approved</div>
+        <div class="stat-value" id="approvedCount">0</div>
+      </div>
+
+    </section>
+
+    <section class="toolbar">
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search documents, departments or submitters..."
+          oninput="filterDocuments()"
+        >
+      </div>
+
+      <select id="statusFilter" onchange="filterDocuments()">
+        <option value="all">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Under Review">Under Review</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+
+      <select id="priorityFilter" onchange="filterDocuments()">
+        <option value="all">All Priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Critical">Critical</option>
+      </select>
+
+    </section>
+
+    <section>
+
+      <div class="section-header">
+        <h2>Documents</h2>
+        <span id="resultCount">0 documents</span>
+      </div>
+
+      <div class="document-grid" id="documentGrid">
+        <div class="empty-state">
+          <h3>Loading documents...</h3>
+          <p>Please wait while the cloud data is loaded.</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="modal-overlay" id="documentModal">
+
+    <div class="modal">
+
+      <div class="modal-header">
+        <h2 id="modalTitle">Create Document</h2>
+        <button class="close-btn" onclick="closeModal()">×</button>
+      </div>
+
+      <form id="documentForm">
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Document Title</label>
+            <input
+              type="text"
+              id="title"
+              placeholder="e.g. Annual Budget Proposal"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Department</label>
+            <select id="department" required>
+              <option value="">Select Department</option>
+              <option>Finance</option>
+              <option>Human Resources</option>
+              <option>IT</option>
+              <option>Marketing</option>
+              <option>Operations</option>
+              <option>Administration</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="priority" required>
+              <option value="">Select Priority</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+              <option>Critical</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Submitted By</label>
+            <input
+              type="text"
+              id="submittedBy"
+              placeholder="Enter name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Document Type</label>
+            <select id="documentType" required>
+              <option value="">Select Type</option>
+              <option>Report</option>
+              <option>Proposal</option>
+              <option>Policy</option>
+              <option>Request</option>
+              <option>Contract</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Description</label>
+            <textarea
+              id="description"
+              placeholder="Briefly describe the document..."
+              required
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" onclick="closeModal()">
+            Cancel
+          </button>
+
+          <button type="submit" class="primary-btn">
+            Save Document
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer>
+    Document Approval Workflow System • Cloud Computing Project
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
